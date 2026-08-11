@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoltVantage | Smart Energy Monitor</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-bolt"></i>
+                <h1>VoltVantage</h1>
+            </div>
+            <div class="tariff-control">
+                <label>Tariff ($/kWh):</label>
+                <input type="number" id="tariffRate" value="0.15" step="0.01" onchange="updateAll()">
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- Summary Cards -->
+            <div class="card summary-card">
+                <h3>Total Daily Usage</h3>
+                <p id="totalKwh">0.00 kWh</p>
+            </div>
+            <div class="card summary-card">
+                <h3>Daily Cost</h3>
+                <p id="totalCost">$0.00</p>
+            </div>
+            <div class="card summary-card">
+                <h3>Monthly Estimate</h3>
+                <p id="monthlyCost">$0.00</p>
+            </div>
+        </div>
+
+        <main>
+            <!-- Device Management -->
+            <section class="controls">
+                <div class="card">
+                    <h3><i class="fas fa-plus-circle"></i> Add New Device</h3>
+                    <form id="deviceForm">
+                        <input type="text" id="deviceName" placeholder="Device Name (e.g. AC)" required>
+                        <input type="text" id="roomName" placeholder="Room" required>
+                        <input type="number" id="wattage" placeholder="Watts" required>
+                        <input type="number" id="hours" placeholder="Hrs/Day" step="0.1" max="24" required>
+                        <button type="submit" class="btn-primary">Add Device</button>
+                    </form>
+                </div>
+
+                <div class="card alerts" id="anomalyBox">
+                    <h3><i class="fas fa-exclamation-triangle"></i> System Alerts</h3>
+                    <ul id="anomalyList">
+                        <li class="safe">System nominal. No spikes detected.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Device Table -->
+            <section class="device-list card">
+                <div class="table-header">
+                    <h3>Registered Devices</h3>
+                    <button class="btn-secondary" onclick="sortDevices()">
+                        <i class="fas fa-sort-amount-down"></i> Sort by Usage
+                    </button>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Device</th>
+                                <th>Room</th>
+                                <th>Watts</th>
+                                <th>Hrs/Day</th>
+                                <th>kWh/Day</th>
+                                <th>Cost/Day</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deviceTableBody">
+                            <!-- JS injected rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Recommendations -->
+            <section class="card recommendations">
+                <h3><i class="fas fa-lightbulb"></i> Smart Saving Tips</h3>
+                <ul id="recList">
+                    <li>Add devices to see personalized recommendations.</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
